@@ -1,13 +1,10 @@
-// import logo from './logo.svg';
-import React, { useEffect, useState } from 'react';
+import React , {useEffect, useState}from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import EmpList from './components/empList.js';
 import Update from './components/updateEmp.js';
-import Create from './components/createEmp.js';
 import EmployeeService from './services/EmployeeService';
-import axios from 'axios';
+
 
 // function App() {
 //   return (
@@ -69,6 +66,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route exact path='/show' element={<EmpList employees={employees}/>}/>
+        {/* <Route exact path='/show' element={<EmpList />}/> */}
         <Route exact path='/edit' element={<Update/>}/>
       </Routes>
     </Router>

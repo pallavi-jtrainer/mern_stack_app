@@ -18,19 +18,19 @@ const Update = (props) => {
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [salary, setSalary] = useState(0);
-    const [id, setId] = useState(0);
+    const [eId, setEid] = useState(0);
 
     useEffect(() => {
-        setId(localStorage.getItem('id'));
+        setEid(localStorage.getItem('id'));
         setFirstName(localStorage.getItem('firstname'));
         setLastName(localStorage.getItem('lastname'));
         setSalary(localStorage.getItem('salary'));
        // console.log(id, firstname);
         localStorage.clear();
-    })
+    }, [])
 
     const updateEmployee = () => {
-        EmployeeService.updateEmployee(id, {firstname, lastname, salary});
+        EmployeeService.updateEmployee(eId, {firstname, lastname, salary});
     }
 
     return(
@@ -47,7 +47,7 @@ const Update = (props) => {
                 <label id="lab">Salary: </label>
                 <input type="text" placeholder="Salary" value={salary} onChange={(e) => setSalary(e.target.value)}/>
             </Form.Field>
-            <Button type="submit" onClick={updateEmployee}>Update</Button>
+            <Button type="submit" onClick={() => updateEmployee}>Update</Button>
         </Form>
     )
 }
