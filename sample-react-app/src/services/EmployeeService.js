@@ -3,20 +3,20 @@ import axios from "axios";
 const BASE_URL = "https://61add432d228a9001703afa6.mockapi.io/fakeData";
 
 class EmployeeService {
-    getAllEmployees() {
-        return axios.get(BASE_URL);
+    async getAllEmployees() {
+        return await axios.get(BASE_URL);
     }
 
-    createEmployee(){
-
+    createEmployee(employee){
+        return axios.post(BASE_URL, employee);
     }
 
-    updateEmployee() {
-
+    updateEmployee(id, employee) {
+        return axios.put(BASE_URL + '/' + id, employee);
     }
 
-    deleteEmployee() {
-
+    deleteEmployee(id) {
+        return axios.delete(BASE_URL + '/' + id);
     }
 
     getEmployeeById(id) {

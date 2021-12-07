@@ -1,9 +1,13 @@
 // import logo from './logo.svg';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import Create from './components/createEmp';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import EmpList from './components/empList.';
+import { createBrowserHistory } from 'history';
+import EmpList from './components/empList.js';
+import Update from './components/updateEmp.js';
+import Create from './components/createEmp.js';
+import EmployeeService from './services/EmployeeService';
+import axios from 'axios';
 
 // function App() {
 //   return (
@@ -27,26 +31,48 @@ import EmpList from './components/empList.';
 //   );
 // }
 
-class App extends React.Component {
-  render() {
-    return(
-      <Router>
-        <div className="App">
-          <h2 className="main-header">
-            Class Component - Main Component
-          </h2>
-          <div>
-            {/* <Create/> */}
-            <Routes>
-            {/* <Route exact path='/create' component={Create} /> */}
-              {/* <Route exact path='/create' element={<Create/>} /> */}
-              <Route exact path='/show' element={<EmpList/>} />
-            </Routes>
-          </div>
-        </div>
-      </Router>
-    );    
-  }
+// class App extends React.Component {
+//   render() {
+//     const history = createBrowserHistory();
+//     return(
+//       <Router history={history}>
+//         <div className="App">
+//           <h2 className="main-header">
+//             Class Component - Main Component
+//           </h2>
+//           <div>
+//             {/* <Create/> */}
+//             <Routes>
+//               {/* <Route exact path='/show' component={EmpList}/> */}
+//               <Route exact path='/create' element={<Create/>} />
+//               <Route exact path='/show' element={<EmpList/>} />
+//               <Route exact path='/edit/:id' element={<Update/>} />
+//             </Routes>
+//           </div>
+//         </div>
+//       </Router>
+//     );    
+//   }
+// }
+
+const App = () => {
+  const [employees, setEmployees] = useState([])
+  
+  useEffect(() => {
+    EmployeeService.getAllEmployees()
+    .then((res) => {
+      setEmployees(res.data);
+    })
+  }, [])
+
+  return(
+    <Router>
+      <Routes>
+        <Route exact path='/show' element={<EmpList employees={employees}/>}/>
+        <Route exact path='/edit' element={<Update/>}/>
+      </Routes>
+    </Router>
+  )
 }
 
 export default App;
