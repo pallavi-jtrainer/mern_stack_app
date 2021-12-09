@@ -10,6 +10,7 @@ const db = require('./models')
 const Role = db.role;
 const dbConfig = require('./config/db.config');
 
+//db connection
 db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
     useNewUrlParser:true, useUnifiedTopology:true
 })
@@ -21,7 +22,11 @@ db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`
     console.log("Connection Error", err);
     process.exit();
 });
+//routes
+require('./routes/auth.routes')(app);
+require('./routes/user.routes')(app);
 
+//port
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`)
