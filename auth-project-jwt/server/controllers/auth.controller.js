@@ -9,7 +9,7 @@ var bcrypt = require('bcryptjs');
 exports.login = (req, res) => {
     User.findOne({
         username: req.body.username
-    }).populate("roles", "__v")
+    }).populate("roles", "name")
     .exec((err, user) => {
         if(err) {
             return res.status(500).send({message: err})
@@ -33,9 +33,9 @@ exports.login = (req, res) => {
         var token = jwt.sign({id: user.id}, config.secret, {expiresIn: 86400});
 
         var permissions = [];
-        
+        console.log(user.roles)
         for(let i = 0; i < user.roles.length; i++) {
-            permissions.push("ROLE_" + user.roles[i].name.toUpperCase);
+            permissions.push("ROLE_" + user.roles[i].name.toUpperCase());
         }
 
         return res.status(200).send({
@@ -52,7 +52,7 @@ exports.register = (req, res) => {
     const newUser = new User({
         username: req.body.username,
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password)
+        password: bcrypt.hashSync(req.body.password, 8)
     });
 
     newUser.save((err, user) => {
