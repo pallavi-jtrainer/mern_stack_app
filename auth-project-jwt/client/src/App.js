@@ -1,37 +1,53 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
 
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Home from "./components/Home";
-import Profile from "./components/Profile";
+import Login from "./components/login";
+import Register from "./components/register";
+import Home from "./components/home";
+import Profile from "./components/profile";
 import UserDash from "./components/userDash";
-import AdminDash from "./components/adminDash"
+import AdminDash from "./components/adminDash";
+
+import Pubsub from './common/PubSub'; 
+import AuthVerify from "./common/AuthVerify";
 
 const App = () => {
+  
   const [showAdminDash, setShowAdminDash] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
 
+  
   useEffect(() => {
-    const user = AuthService.getCurrentUser();
-
+    const user = AuthService.CurrentUser();
+    
     if (user) {
       setCurrentUser(user);
       setShowAdminDash(user.roles.includes("ROLE_ADMIN"));
     }
+    
+    // Pubsub.on("logout", () => {
+    //   logOut();
+    // })
+    // 
+    // return () => {
+    //   Pubsub.remove("logout");
+    //}
   }, []);
-
+  
+  
   const logOut = () => {
-    AuthService.logout();
+    AuthService.Logout();
+    setShowAdminDash(false);
+    setCurrentUser(undefined);
   };
-
+  
   return (
-    <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
+      <div>
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">
           Authorization Demo
         </Link>
@@ -67,9 +83,9 @@ const App = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
+              <Link to={"/logout"} className="nav-link" onClick={logOut}>
                 LogOut
-              </a>
+              </Link>
             </li>
           </div>
         ) : (
@@ -90,6 +106,7 @@ const App = () => {
       </nav>
 
       <div className="container mt-3">
+        <Router>
           <Routes>
             <Route exact path={["/", "/home"]} element={<Home/>} />
             <Route exact path="/login" element={<Login/>} />
@@ -98,7 +115,9 @@ const App = () => {
             <Route path="/user" element={<UserDash/>} />
             <Route path="/admin" element={<AdminDash/>} />
           </Routes>
+        </Router>
       </div>
+      <AuthVerify logOut={logOut}/>
     </div>
   );
 };

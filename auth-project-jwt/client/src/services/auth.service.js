@@ -28,7 +28,10 @@ const Logout = () => {
     localStorage.removeItem("user")
 };
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
-    Login, Logout, CurrentUser, Register,
-};
+const AuthService = {Login, Logout, CurrentUser, Register};
+
+export default AuthService;
+
+// export default {
+//     Login, Logout, CurrentUser, Register,
+// };
