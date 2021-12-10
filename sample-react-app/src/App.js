@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import EmpList from './components/empList.js';
 import Update from './components/updateEmp.js';
 import EmployeeService from './services/EmployeeService';
+import Dummy from './components/dummyComponent';
 
 
 // function App() {
@@ -68,6 +69,8 @@ const App = () => {
         <Route exact path='/show' element={<EmpList employees={employees}/>}/>
         {/* <Route exact path='/show' element={<EmpList />}/> */}
         <Route exact path='/edit' element={<Update/>}/>
+        {/* <Route exact path='/dummy/:id' element={<Dummy/>}/> */}
+        <Route exact path='/dummy' element={<Dummy/>}/>
       </Routes>
     </Router>
   )
