@@ -1,10 +1,12 @@
-import React , {useEffect, useState}from 'react';
+import React , { useState}from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import EmpList from './components/empList.js';
-import Update from './components/updateEmp.js';
-import EmployeeService from './services/EmployeeService';
-import Dummy from './components/dummyComponent';
+import Modal from './components/modal';
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import EmpList from './components/empList.js';
+// import Update from './components/updateEmp.js';
+// import EmployeeService from './services/EmployeeService';
+// import Dummy from './components/dummyComponent';
+// import PortalDemo from './components/PortalDemo';
 
 
 // function App() {
@@ -54,26 +56,49 @@ import Dummy from './components/dummyComponent';
 // }
 
 const App = () => {
-  const [employees, setEmployees] = useState([])
-  
-  useEffect(() => {
-    EmployeeService.getAllEmployees()
-    .then((res) => {
-      setEmployees(res.data);
-    })
-  }, [])
+  const [openModal, setOpenModal] = useState(false);
+    const Toggle = () => setOpenModal(!openModal);
 
-  return(
-    <Router>
-      <Routes>
-        <Route exact path='/show' element={<EmpList employees={employees}/>}/>
-        {/* <Route exact path='/show' element={<EmpList />}/> */}
-        <Route exact path='/edit' element={<Update/>}/>
-        {/* <Route exact path='/dummy/:id' element={<Dummy/>}/> */}
-        <Route exact path='/dummy' element={<Dummy/>}/>
-      </Routes>
-    </Router>
-  )
+    return (
+        <div>
+            <button className='modalBtn' onClick={() => Toggle()}>
+                Show Modal
+            </button>
+
+            <Modal show={openModal} title="Modal" close={Toggle}>
+                New Modal Content    
+            </Modal>
+        </div> 
+    )
+
+
+
+
+
+  // const [employees, setEmployees] = useState([])
+  
+  // useEffect(() => {
+  //   EmployeeService.getAllEmployees()
+  //   .then((res) => {
+  //     setEmployees(res.data);
+  //   })
+  // }, [])
+
+  // return(
+  //   // <div>
+  //   //   <button>Open Modal</button>
+  //   // </div>
+  //   <PortalDemo/>
+  //   // <Router>
+  //   //   <Routes>
+  //   //     <Route exact path='/show' element={<EmpList employees={employees}/>}/>
+  //   //     {/* <Route exact path='/show' element={<EmpList />}/> */}
+  //   //     <Route exact path='/edit' element={<Update/>}/>
+  //   //     {/* <Route exact path='/dummy/:id' element={<Dummy/>}/> */}
+  //   //     <Route exact path='/dummy' element={<Dummy/>}/>
+  //   //   </Routes>
+  //   // </Router>
+  // )
 }
 
 export default App;
