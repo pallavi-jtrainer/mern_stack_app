@@ -46,79 +46,80 @@ const App = () => {
   };
   
   return (
+    <Router>
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/"} className="navbar-brand">
-          Authorization Demo
-        </Link>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/home"} className="nav-link">
-              Home
-            </Link>
-          </li>
-
-          {showAdminDash && (
+          <Link to={"/"} className="navbar-brand">
+            Authorization Demo
+          </Link>
+          <div className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
-                Admin Dashboard
+              <Link to={"/home"} className="nav-link">
+                Home
               </Link>
             </li>
-          )}
 
-          {currentUser && (
-            <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
-              </Link>
-            </li>
+            {showAdminDash && (
+              <li className="nav-item">
+                <Link to={"/admin"} className="nav-link">
+                  Admin Dashboard
+                </Link>
+              </li>
+            )}
+
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/user"} className="nav-link">
+                  User
+                </Link>
+              </li>
+            )}
+          </div>
+
+          {currentUser ? (
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/profile"} className="nav-link">
+                  {currentUser.username}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/logout"} className="nav-link" onClick={logOut}>
+                  LogOut
+                </Link>
+              </li>
+            </div>
+          ) : (
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/login"} className="nav-link">
+                  Login
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link to={"/register"} className="nav-link">
+                  Sign Up
+                </Link>
+              </li>
+            </div>
           )}
+        </nav>
+
+        <div className="container mt-3">
+            <Routes>
+              <Route exact path={["/", "/home"]} element={<Home/>} />
+              <Route exact path="/login" element={<Login/>} />
+              <Route exact path="/register" element={<Register/>} />
+              <Route exact path="/profile" element={<Profile/>} />
+              <Route path="/user" element={<UserDash/>} />
+              <Route path="/admin" element={<AdminDash/>} />
+            </Routes>
         </div>
-
-        {currentUser ? (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={"/profile"} className="nav-link">
-                {currentUser.username}
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/logout"} className="nav-link" onClick={logOut}>
-                LogOut
-              </Link>
-            </li>
-          </div>
-        ) : (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={"/login"} className="nav-link">
-                Login
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to={"/register"} className="nav-link">
-                Sign Up
-              </Link>
-            </li>
-          </div>
-        )}
-      </nav>
-
-      <div className="container mt-3">
-        <Router>
-          <Routes>
-            <Route exact path={["/", "/home"]} element={<Home/>} />
-            <Route exact path="/login" element={<Login/>} />
-            <Route exact path="/register" element={<Register/>} />
-            <Route exact path="/profile" element={<Profile/>} />
-            <Route path="/user" element={<UserDash/>} />
-            <Route path="/admin" element={<AdminDash/>} />
-          </Routes>
-        </Router>
+        <AuthVerify logOut={logOut}/>
       </div>
-      <AuthVerify logOut={logOut}/>
-    </div>
+    </Router>
+      
   );
 };
 

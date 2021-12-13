@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const parseJwt = (token) => {
     try {
@@ -10,7 +10,7 @@ const parseJwt = (token) => {
 };
 
 const AuthVerify = (props) => {
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     props.history.listen(() => {
         const token = JSON.parse(localStorage.getItem("user"));
 
@@ -29,4 +29,4 @@ const AuthVerify = (props) => {
     )
 }
 
-export default withRouter(AuthVerify);
+export default AuthVerify;
