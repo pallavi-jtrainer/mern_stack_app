@@ -23,9 +23,10 @@ app.get('/', (req, res) => {
 
 app.post('/uploads', async(req, res) => {
     const file = req.files.uploadImage;
-    console.log(req.files, req.body);
+    const fileName = req.files.uploadImage.name;
+    console.log(file);
 
-    const filename = uuidV4().toString + path.extname(file.name);
+    const filename = uuidV4() + '-' + fileName;
     const result = uploadFile(file.data, filename);
     console.log(result)
     // return res.redirect(`/uploads/${result.Key}`);
