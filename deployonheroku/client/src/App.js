@@ -7,15 +7,15 @@ import Details from './components/Books/BookDetails';
 
 function App() {
   return (
-    <div className="App">
-      <Router>
+    <Router>
+      <div>
         <Routes>
+          <Route exact path='/' element={<Books/>}/>
           <Route exact path='/books' element={<Books/>}/>
-          <Route path={'/books/:id'} element={<Details/>}/>
+          <Route exact path='/books/:id' element={<Details/>}/>
         </Routes>
-      </Router>
-      
-    </div>
+      </div>
+    </Router>
   );
 }
 

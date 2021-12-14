@@ -67,6 +67,12 @@ const Books = () => {
                             </tr>
                         </thead>
                         <tbody>
+                            {/* <tr>
+                                <td>1</td>
+                                <td>A Book Title</td>
+                                <td>No One</td>
+                                <td><Button>Details</Button></td>
+                            </tr> */}
                         {
                             (books.length > 0 ? 
                                     books.map((book, index) => 

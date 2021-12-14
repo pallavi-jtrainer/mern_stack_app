@@ -17,7 +17,10 @@ const PORT = process.env.PORT || 5000;
 //     res.send("WORKING");
 // })
 
+app.use(express.static('client/build'))
+
 app.use(routes);
+
 app.listen(PORT, ()=>{
     console.log(`Server is listening on port: ${PORT}`);
 })

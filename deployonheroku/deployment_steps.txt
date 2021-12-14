@@ -1,0 +1,57 @@
+Heroku
+1. Create a free account on https://signup.heroku.com/login
+2. Login to your account
+
+MERN app
+1. Embed the client/frontend into the nodejs app -> preferred
+
+2. Open terminal
+$ npm i -g heroku => installs the CLI
+
+$ heroku --version => returns the version
+
+3. After installing
+$ cd <your app>
+$ heroku login  => enter username and password
+
+4. Open a second terminal
+$ cd <your app>
+$ git init
+
+5. Make the below changes in package.json (backend):
+"scripts": {
+    "start": "node server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run start\" \"npm run client\""
+},
+"devDependencies": {
+    "nodemon": "^2.0.15"
+}
+NOTE: install concurrently using npm
+
+6. create a file Procfile in the root directory. Add the below line:
+web: npm run dev
+
+7. In routes/index.js, add the below lines:
+router.use(function(req, res) {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+8. In server.js, add
+app.use(express.static('client/build'))
+
+In Client:
+1. In index.js, remove ReactStrictMode
+
+2. In services, remove BASE_URL (if you have it)
+
+3. Build the react app
+
+In Second terminal
+1. cd into project root directory
+2. git add .
+3. git commit -m "message"
+4. heroku create => creates a heroku git repo online
+5. git push heroku master => builds and deploys the app
+
+

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import BookService from "../../services/BookService";
 
@@ -9,9 +9,8 @@ const Details = () => {
 
     //console.log(id);
     useEffect(() => {
-        
         loadBook(id);
-    }, [])
+    })
 
     const loadBook = (id) => {
         BookService.getBook(id).then(res => setBook(res.data))
@@ -19,7 +18,7 @@ const Details = () => {
     }
 
     return(
-        <div className="container">
+        <Container fluid>
             <Row>
                 <Col size="md-4">
                     <label>Title:</label>
@@ -38,10 +37,10 @@ const Details = () => {
             </Row>
             <Row>
                 <Col size="md-4">
-                    <Link to="/books">Back to Main Page</Link>
+                    <Link to="/">Back to Main Page</Link>
                 </Col>
             </Row>
-        </div>
+        </Container>
     )
 }
 
