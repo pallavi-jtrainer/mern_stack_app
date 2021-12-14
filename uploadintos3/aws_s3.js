@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const S3 = require("aws-sdk/clients/s3");
 
 const bucketName = process.env.AWS_BUCKET_NAME;
@@ -21,13 +23,18 @@ module.exports = {
             Body: fileStream,
             Key: filename
         };
-        return s3.upload(uploadParams).promise();
+        s3.upload(uploadParams, (err, data) => {
+            if(err) {
+                throw err;
+            }
+            console.log(`File uploaded successfully. ${data.location}`)
+        })
     },
-    downloadFile: (filename) => {
-        const dParams = {
-            Key: filename,
-            Bucket: bucketName
-        };
-        return s3.getObject(dParams).createReadStream();
-    }
+    // downloadFile: (filename) => {
+    //     const dParams = {
+    //         Key: filename,
+    //         Bucket: bucketName
+    //     };
+    //     return s3.getObject(dParams).createReadStream();
+    // }
 }

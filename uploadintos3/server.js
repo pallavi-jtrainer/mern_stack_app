@@ -15,11 +15,11 @@ app.get('/', (req, res) => {
     return res.render("index");
 });
 
-app.get('/uploads/:Key', (req,res) => {
-    const key = req.params.Key;
-    const file = downloadFile(key);
-    file.pipe(res);
-});
+// app.get('/uploads/:Key', (req,res) => {
+//     const key = req.params.Key;
+//     const file = downloadFile(key);
+//     file.pipe(res);
+// });
 
 app.post('/uploads', async(req, res) => {
     const file = req.files.uploadImage;
@@ -28,7 +28,7 @@ app.post('/uploads', async(req, res) => {
     const filename = uuidV4().toString + path.extname(file.name);
     const result = uploadFile(file.data, filename);
     console.log(result)
-    return res.redirect(`/uploads/${result.Key}`);
+    // return res.redirect(`/uploads/${result.Key}`);
 });
 
 app.listen(3000, () => console.log(`server listening on ${3000}`));
